@@ -23,7 +23,10 @@ class List {
         void print_reverse(Node<T>* head);
 
     public:
-        List();
+        List(){
+            this->tail = nullptr;
+            this->head = nullptr;
+        }
 
         T front(){
             return head->data;
@@ -44,6 +47,7 @@ class List {
             tail->next = new Node;
             tail = tail->next;
             tail->data = value;
+            tail->next = nullptr;
 
         }
         void pop_front(){
@@ -108,7 +112,7 @@ class List {
             if(head){
                 head->killSelf();
             }
-            head = NULL;
+            head = nullptr;
         }
         Iterator<T> begin();
         Iterator<T> end();
@@ -117,7 +121,7 @@ class List {
             if(head){
                 head->killSelf();
             }
-            head = NULL;
+            head = nullptr;
         }
 };
 #endif
