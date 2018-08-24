@@ -15,14 +15,14 @@ using namespace std;
 
 template <typename T>
 class List {
-    public:
+    private:
         Node<T>* head;
         Node<T>* tail;
         int nodes;
 
         void print_reverse(Node<T>* head);
 
-    //public:
+    public:
         List(){
             this->tail = nullptr;
             this->head = nullptr;
@@ -131,7 +131,7 @@ class List {
         bool empty(){
             return !(size());
         }
-        int size(){
+        int size() const{
             return(this->nodes);
         }
         void print(){
