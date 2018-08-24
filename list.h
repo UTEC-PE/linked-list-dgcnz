@@ -15,17 +15,18 @@ using namespace std;
 
 template <typename T>
 class List {
-    private:
+    public:
         Node<T>* head;
         Node<T>* tail;
         int nodes;
 
         void print_reverse(Node<T>* head);
 
-    public:
+    //public:
         List(){
             this->tail = nullptr;
             this->head = nullptr;
+            this->nodes = 0;
         }
 
         T front(){
@@ -35,60 +36,97 @@ class List {
             return tail->data;
         }
         void push_front(T value){
-            (this->nodes)++;
-            Node* temp = new Node;
+            Node<T>* temp = new Node<T>;
             temp->data = value;
-            temp->next = head;
-            head = temp;
-            delete temp;
+            temp->next = this->head;
+
+            (this->nodes)++;
+
+            if(this->head != nullptr){
+                this->head = temp;
+            }
+            else{
+                this->head = this->tail = temp;
+                temp = nullptr;
+            }
         }
         void push_back(T value){
-            (this->nodes)++;
-            tail->next = new Node;
-            tail = tail->next;
-            tail->data = value;
-            tail->next = nullptr;
+            Node<T>* temp = new Node<T>;
+            temp->data = value;
+            temp->next = nullptr;
 
+            (this->nodes)++;
+
+            if(this->head != nullptr){
+                this->tail->next = temp;
+                this->tail = temp;
+            }
+            else{
+                this->head = temp;
+                this->tail = temp;
+                temp = nullptr;
+            }
         }
         void pop_front(){
-            (this->nodes)--;
-            Node* temp = head;
-            head = head.next;
-            temp->next = nullptr;
-            temp->killSelf();
-            delete temp;
+            if(this->head != nullptr){
+                Node<T>* temp = new Node<T>;
+                temp = head;
+                head = head->next;
+                (this->nodes)--;
+                delete temp;
+            }
+            else{
+                std::cout<<"Empty list, there's nothing to delete."<<'\n';
+            }
         }
         void pop_back(){
-            (this->nodes)--;
-            Node* temp = head;
-            while(temp->next != tail){
-                temp = temp->next;
+            if(this->head != nullptr){
+                Node<T>* temp = head;
+
+                while(temp->next != tail){
+                    temp = temp->next;
+                }
+
+                temp->next = nullptr;
+
+                (this->nodes)--;
+                delete tail;
             }
-            temp->next = nullptr;
-            tail->killSelf();
-            delete temp;
+            else{
+                std::cout<<"Empty list, there's nothing to delete."<<'\n';
+            }
         }
         T get(int position){
-
-            if(position>=nodes){
-                if(position==0){
-                    return head->data;
-                }
-                else if(position == nodes-1){
-                    return tail->data;
+            try{
+                if(position<=nodes){
+                    if(position==0){
+                        return head->data;
+                    }
+                    else if(position == nodes-1){
+                        return tail->data;
+                    }
+                    else{
+                        Node<T>* temp = head;
+                        while(position--){
+                            temp = temp->next;
+                        }
+                        return temp->data;
+                    }
                 }
                 else{
-                    Node* temp = head;
-                    while(position--){
-                        temp = temp->next;
-                    }
-                    return temp->data;
+                    throw position;
                 }
+            } catch(int position){
+                std::cout << "Segmentation fault. Tried to access non-existing index.\n";
+                std::cout << "Index: "<< position << "Size of list: "<< this->size();
+                return -1;          // Estuve buscando una manera de no retornar nada, pero no la encontré.
             }
         }
         void concat(List<T> &other){
-            this->tail->next = other->head;
-            (this->nodes)+=(other->nodes)
+            if(this->size() || other->size()){
+                this->tail->next = other->head;
+                this->nodes += other->nodes;
+            }
         }
         bool empty(){
             return !(size());
@@ -97,16 +135,35 @@ class List {
             return(this->nodes);
         }
         void print(){
-            Node* temp = head;
-            std::cout(head->data)
-            while(temp->next){
-                std::cout(temp->next->data);
+            if(this->size()){
+
+                Node<T>* temp = new Node<T>;
+                temp = head;
+
+                while(temp){
+                    std::cout<<temp->data<<" ";
+                    temp=temp->next;
+                }
+                std::cout<<'\n';
             }
+            /*
+            else{
+                cout<<"List is empty."
+            }
+            */
         }
         void print_reverse(){
-            Node* temp = head;
-            if(temp->next)temp->next->print_reverse();
-            cout << this->value;
+            if(this->size()){
+                Node<T>* temp = this->head;
+                if(temp->next)temp->next->print_reverse();
+                cout << this->value;
+            }
+
+            /*
+            else{
+                cout<<"List is empty."
+            }
+            */
         }
         void clear(){
             if(head){
