@@ -14,7 +14,7 @@ int main(){
     l->print();
     l->push_back(4);
     l->print();
-
+    l->print_reverse();
     cout << "get pos 2: "<<l->get(2)<<endl;
 
     l->pop_front();

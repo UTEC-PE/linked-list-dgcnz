@@ -20,7 +20,12 @@ class List {
         Node<T>* tail;
         int nodes;
 
-        void print_reverse(Node<T>* head);
+        void print_reverse(Node<T>* node){
+            if(node != nullptr){
+                print_reverse(node->next);
+                std::cout << node->data << " ";
+            }
+        }
 
     public:
         List(){
@@ -30,6 +35,7 @@ class List {
         }
 
         T front(){
+
             return head->data;
         }
         T back(){
@@ -119,7 +125,6 @@ class List {
             } catch(int position){
                 std::cout << "Segmentation fault. Tried to access non-existing index.\n";
                 std::cout << "Index: "<< position << "Size of list: "<< this->size();
-                return -1;          // Estuve buscando una manera de no retornar nada, pero no la encontré.
             }
         }
         void concat(List<T> &other){
@@ -137,8 +142,7 @@ class List {
         void print(){
             if(this->size()){
 
-                Node<T>* temp = new Node<T>;
-                temp = head;
+                Node<T>* temp = head;
 
                 while(temp){
                     std::cout<<temp->data<<" ";
@@ -153,12 +157,9 @@ class List {
             */
         }
         void print_reverse(){
-            if(this->size()){
-                Node<T>* temp = this->head;
-                if(temp->next)temp->next->print_reverse();
-                cout << this->value;
+            if(this->size()>0){
+                print_reverse(this->head);
             }
-
             /*
             else{
                 cout<<"List is empty."
