@@ -15,14 +15,14 @@ int main(){
     l->push_back(4);
     l->print();
     l->print_reverse();
-    cout << "get pos 2: "<<l->get(2)<<endl;
+    //cout << "get pos 2: "<<l->get(2)<<endl;
 
-    l->pop_front();
-    l->print();
-    cout << "get pos 0: "<< l->get(0)<<endl;
     l->pop_back();
     l->print();
-
+    //cout << "get pos 0: "<< l->get(0)<<endl;
+    l->pop_back();
+    l->print();
+    l->pop_front();
 
     return 0;
 }

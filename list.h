@@ -48,6 +48,7 @@ class List {
 
             (this->nodes)++;
 
+            //cout << "Pushing " << value << " to front \n";
             if(this->head != nullptr){
                 this->head = temp;
             }
@@ -63,30 +64,48 @@ class List {
 
             (this->nodes)++;
 
+            //cout << "Pushing " << value << " to back \n";
+
             if(this->head != nullptr){
                 this->tail->next = temp;
                 this->tail = temp;
+
             }
             else{
                 this->head = temp;
                 this->tail = temp;
                 temp = nullptr;
+
             }
         }
         void pop_front(){
-            if(this->head != nullptr){
+            if(this->size()>1){
+                //cout << "Popping value in front"<< endl;
                 Node<T>* temp = new Node<T>;
-                temp = head;
-                head = head->next;
+                temp = this->head;
+
+
+                this->head = head->next;
+
                 (this->nodes)--;
+
                 delete temp;
+
+
+            }
+            else if(this->size()==1){
+                this->tail=nullptr;
+                (this->nodes)--;
+                delete this->head;
             }
             else{
                 std::cout<<"Empty list, there's nothing to delete."<<'\n';
             }
         }
         void pop_back(){
-            if(this->head != nullptr){
+
+            if(this->size()>1){
+
                 Node<T>* temp = head;
 
                 while(temp->next != tail){
@@ -97,6 +116,12 @@ class List {
 
                 (this->nodes)--;
                 delete tail;
+                this->tail = temp;
+            }
+            else if(this->size()==1){
+                this->head=nullptr;
+                (this->nodes)--;
+                delete this->tail;
             }
             else{
                 std::cout<<"Empty list, there's nothing to delete."<<'\n';
@@ -140,6 +165,7 @@ class List {
             return(this->nodes);
         }
         void print(){
+            cout << "size: "<<this->size() << " -> ";
             if(this->size()){
 
                 Node<T>* temp = head;
@@ -160,6 +186,7 @@ class List {
             if(this->size()>0){
                 print_reverse(this->head);
             }
+            cout << endl;
             /*
             else{
                 cout<<"List is empty."
