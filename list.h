@@ -36,10 +36,10 @@ class List {
 
         T front(){
 
-            return head->data;
-        }
+            return head->data; // Falta controlar el caso vacío
+        } 
         T back(){
-            return tail->data;
+            return tail->data; // Igual que el caso anterior
         }
         void push_front(T value){
             Node<T>* temp = new Node<T>;
@@ -50,7 +50,7 @@ class List {
 
             //cout << "Pushing " << value << " to front \n";
             if(this->head != nullptr){
-                this->head = temp;
+                this->head = temp; 
             }
             else{
                 this->head = this->tail = temp;
@@ -81,7 +81,7 @@ class List {
         void pop_front(){
             if(this->size()>1){
                 //cout << "Popping value in front"<< endl;
-                Node<T>* temp = new Node<T>;
+                Node<T>* temp = new Node<T>; // No es necesario inicializar
                 temp = this->head;
 
 
@@ -153,7 +153,7 @@ class List {
             }
         }
         void concat(List<T> &other){
-            if(this->size() || other->size()){
+            if(this->size() || other->size()){ // No se controla si la lista que llama el concat está vacía
                 this->tail->next = other->head;
                 this->nodes += other->nodes;
             }
@@ -193,7 +193,7 @@ class List {
             }
             */
         }
-        void clear(){
+        void clear(){ // No está igualando la cantidad de nodos a 0
             if(head){
                 head->killSelf();
             }
